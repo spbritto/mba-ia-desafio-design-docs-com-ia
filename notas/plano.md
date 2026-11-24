@@ -6,7 +6,7 @@ Legenda de status: ⬜ pendente · 🟨 em andamento · ✅ concluído
 |---|---|---|
 | 0 | Setup: `CLAUDE.md`, `notas/plano.md`, `notas/processo.md` | ✅ |
 | 1 | Extração e mapeamento: `notas/matriz-transcricao.md`, `notas/mapa-codigo.md` | ✅ |
-| 2 | ADRs em `docs/adrs/` (7 propostos) | ⬜ |
+| 2 | ADRs em `docs/adrs/` (7 propostos) | ✅ |
 | 3 | `docs/RFC.md` | ⬜ |
 | 4 | `docs/FDD.md` | ⬜ |
 | 5 | `docs/PRD.md` | ⬜ |

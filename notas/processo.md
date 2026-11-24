@@ -115,4 +115,39 @@ ok pode seguir com a fase 1
 estou de acordo. pode fazer o commit. no caso assim fechamos a fase 1 ?
 ```
 
-Todas as 12 recomendações de lacunas (L-01…L-12) aprovadas. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
+Todas as 12 recomendações de lacunas (L-01…L-12) aprovadas.
+
+### [2026-11-23] Fase 2 — ADRs
+
+**Prompts:**
+
+```
+ok, vamos dar sequencia na fase 2. me atualize o escopo dessa fase antes de continuar
+```
+
+```
+ok pode seguir
+```
+
+(Aprovadas junto: data dos ADRs = 2026-11-23 com a observação "data não registrada na transcrição"; substituir `docs/adrs/README.md` por um índice.)
+
+**Instrução de trabalho:** um ADR por decisão principal, formato MADR adaptado (Status, Contexto, Decisão, Alternativas Consideradas, Consequências com Positivas/Negativas/Trade-off aceito, Referências); timestamp junto de cada afirmação; lacunas aprovadas em bloco "Interpretação"/"Proposta" separado das falas; alternativas "plausíveis, não discutidas" sinalizadas como tal; nada de nível FDD (contratos, schemas).
+
+**O que a IA entregou:** 7 ADRs (`ADR-001` a `ADR-007`) + `docs/adrs/README.md` reescrito como índice com a convenção correta de nomes.
+
+**Problemas encontrados e correções:**
+1. **Seção Status como metadado.** A primeira versão trazia `- **Status:** Aceito` como linha de metadado; o critério de aceite pede a *seção* Status. Convertido em `## Status` em todos os ADRs antes da auditoria.
+2. **Observação de análise nova (não estava na matriz):** ao escrever o ADR-003, ficou evidente que retentativas podem quebrar a ordem por pedido prometida no ADR-002 (evento posterior do mesmo pedido entregue antes de um que aguarda retry). Registrado no ADR-003 como "observação de análise, não discutida na reunião", para ser tratado no FDD/RFC — sem inventar decisão.
+3. **Interpretação adicional:** replay da DLQ preserva o `event_id` original (ADR-005), derivada de "recoloca na outbox" ([09:18] Diego); sinalizada como interpretação.
+
+**Autoauditoria (script):** 7 arquivos com nome no padrão `ADR-NNN-kebab-case`; 5 seções obrigatórias presentes em todos; 71 pares `[hh:mm] Nome` únicos → 0 inválidos; caminhos citados existem, exceto `src/worker.ts` e `src/modules/webhooks/`, ambos marcados "(novo, a criar)" em todas as ocorrências; links relativos entre ADRs → 0 quebrados; e-mail, dashboard e arquivamento aparecem apenas como fora de escopo.
+
+**Iteração nº:** 1 da Fase 2.
+
+**Revisão humana e fechamento:**
+
+```
+ok, fiz a revisão do texto das ADRs e estou de acordo. Pode seguir com o commit e fechamos a fase 2.
+```
+
+ADRs aprovados sem alterações. Pendência levada para a Fase 3: incluir no RFC, como questão em aberto, a interação entre retentativas e a ordem por pedido (observação do ADR-003). Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
