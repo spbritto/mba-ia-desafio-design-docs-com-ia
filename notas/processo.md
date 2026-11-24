@@ -72,3 +72,47 @@ sim vamos fazer os commits ao final de cada fase. quero que voce crie uma branch
 ```
 
 **Decisão:** trabalho isolado na branch `docs/design-docs-webhooks`, um commit por fase, PR para a `main` ao final da Fase 8. Regra registrada no `CLAUDE.md` (regra 6) e no `notas/plano.md` (seção "Fluxo git").
+
+### [2026-11-23] Fase 1 — Matriz da transcrição e mapa do código
+
+**Objetivo:** criar a base rastreável para todos os documentos antes de escrever qualquer um deles.
+
+**Prompts:**
+
+```
+me atualize aqui o que será feito na fase 1 antes de seguir
+```
+
+```
+ok pode seguir com a fase 1
+```
+
+**Instrução de trabalho dada à IA (via plano + CLAUDE.md):** classificar cada fala relevante em categorias fechadas (DEC, DEC2, RF, RNF, RES, ALT, OOS, OQ, TRD, CTX, ARM), sempre com `[hh:mm] Nome`, rastreando cada decisão até a fala que a fecha; ler de fato os arquivos de integração e registrar caminho + linha + conexão com a feature; separar explicitamente o que é fato do código do que é proposta.
+
+**O que a IA entregou:**
+- `notas/matriz-transcricao.md`: 97 itens (`T-001`…`T-097`) em 15 blocos temáticos, 12 lacunas (`L-01`…`L-12`), checagem dos pisos do desafio e validação da lista de ADRs.
+- `notas/mapa-codigo.md`: 49 fatos do código (`C-01`…`C-49`) com linha de referência, 7 lacunas do código (`G-01`…`G-07`) e lista de arquivos verificados.
+
+**Achados relevantes que não estavam no plano inicial:**
+- Rotas ficam sob o prefixo `/api/v1` (`src/app.ts:67`) → os contratos do FDD devem usar `/api/v1/webhooks...`, não `/webhooks...` como dito na reunião.
+- Ambiguidade "5 tentativas" (L-01): a soma dos 5 intervalos (~14h36) só fecha com envio inicial + 5 retentativas.
+- Erro de 64 KB (L-02): se lançado na inserção, a regra de rollback da outbox bloquearia a mudança de status do pedido.
+- Rotação com grace period em webhook de saída (L-03): o mecanismo de assinatura dupla não foi discutido.
+- `NotFoundError` não aceita código custom (`src/shared/errors/http-errors.ts:27-31`) → `WEBHOOK_NOT_FOUND` exige classe própria.
+- `redact` do logger não cobre secrets (`src/shared/logger/index.ts:4-11`).
+- Schema não liga `User` a `Customer` (L-10) → risco de autorização no CRUD.
+- `PENDING` nunca é emitido via `changeStatus` (`src/modules/orders/order.status.ts`) — só na criação, que fica fora.
+
+**Autoauditoria (script):** 107 pares `[hh:mm] Nome` citados nas notas e no `CLAUDE.md` conferidos contra `TRANSCRICAO.md` → 0 inválidos. Caminhos de arquivo citados conferidos no repositório → só 3 inexistentes, todos arquivos a criar pela feature.
+
+**Problema encontrado e correção:** a primeira versão da matriz citava `src/worker.ts` e `src/modules/webhooks/webhook.worker.ts` (T-021, T-054) sem a marcação "(novo, a criar)" exigida pela regra 5 do `CLAUDE.md`. Detectado pelo script de verificação de caminhos; corrigido na própria matriz.
+
+**Iteração nº:** 1 da Fase 1.
+
+**Revisão humana e fechamento:**
+
+```
+estou de acordo. pode fazer o commit. no caso assim fechamos a fase 1 ?
+```
+
+Todas as 12 recomendações de lacunas (L-01…L-12) aprovadas. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
