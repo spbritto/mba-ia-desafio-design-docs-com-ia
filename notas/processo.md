@@ -209,4 +209,35 @@ aprovo D-1 a D-6, pode seguir e fazer o commit no final
 
 **Autoauditoria (script):** 59 pares `[hh:mm] Nome` → 0 inválidos; links → 0 quebrados; 8 contratos com request e tabela de status; 0 linhas da matriz de erros sem prefixo `WEBHOOK_`; 9.1 Logs, 9.2 Métricas e 9.3 Tracing presentes; 21 caminhos reais na seção de integração; caminhos inexistentes = apenas arquivos novos marcados; termos fora de escopo só em exclusões/riscos.
 
-**Iteração nº:** 1 da Fase 4. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
+**Iteração nº:** 1 da Fase 4. Usuário autorizou commit direto ao final da fase.
+
+### [2026-11-27] Fase 5 — PRD
+
+**Prompts:**
+
+```
+sim me detalhe a fase 5 antes de seguir
+```
+
+```
+aprovo P-1 a P-4, pode seguir e fazer o commit no final
+```
+
+**Pontos levados ao usuário antes de escrever (todos aprovados):**
+- P-1: responsável Marcos (PM), revisão técnica Larissa — registrado como convenção do pacote, não como fala.
+- P-2: métricas — só a latência < 10 s tem número na reunião; uso do p95 marcado como proposta; adoção "3 de 3" derivada do pedido dos três clientes; consistência = 0 derivada de [09:40]; redução do polling **sem meta numérica** ("a medir"), para não inventar número sem linha de base.
+- P-3: probabilidade/impacto dos riscos como **avaliação da equipe**, com justificativa ancorada em fala sempre que possível.
+- P-4: piloto com os três clientes solicitantes na estratégia de testes, marcado como proposta.
+
+**Instrução de trabalho:** linguagem de produto; nada de payload, tabela, header ou código `WEBHOOK_*` (apontar para o FDD); decisões em tabela curta "o que ganha / o que aceita" com link para o ADR, sem repetir a justificativa; os dois prazos citados com suas falas, sem fundir.
+
+**O que a IA entregou:** `docs/PRD.md` (~3.260 palavras) com as 12 seções obrigatórias: 3 personas, 7 cenários (`PRD-CEN`), 4 métricas (`PRD-MET`, 3 com meta numérica), 7 itens fora de escopo (`PRD-OOS`), 14 requisitos funcionais (`PRD-FR`), 13 não funcionais (`PRD-NFR`), 7 decisões/trade-offs (`PRD-DEC`), 6 dependências (`PRD-DEP`), 7 riscos com probabilidade/impacto/justificativa/mitigação (`PRD-RISK`), 11 critérios de aceitação (`PRD-AC`) e estratégia de testes em 7 níveis.
+
+**Problemas encontrados e correções:**
+1. **Título da seção 1** ("Resumo e contexto") diferente do nome do enunciado ("Resumo e contexto da feature") — alinhado.
+2. **Prefixos de ID novos** (`PRD-CEN`, `PRD-DEC`, `PRD-DEP`) adicionados às convenções do `CLAUDE.md` para manter o Tracker consistente.
+3. **Tentação de métrica inventada evitada:** a primeira ideia para o objetivo de "reduzir polling" era uma meta percentual; sem linha de base na reunião, ficou como "a medir" (decisão P-2).
+
+**Autoauditoria (script):** 12 seções; 58 pares `[hh:mm] Nome` → 0 inválidos; links → 0 quebrados; 7/7 riscos com probabilidade e impacto; 0 ocorrências de conteúdo de nível FDD; termos fora de escopo só na seção 5.2 e em riscos.
+
+**Iteração nº:** 1 da Fase 5. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.

@@ -47,7 +47,7 @@ Atenção: `docs/adrs/README.md` sugere o padrão `0001-titulo.md` — **ignore*
 - Formato: Markdown. Diagramas em Mermaid quando ajudarem (fluxos do FDD).
 - Links entre documentos: relativos (ex.: `./adrs/ADR-001-outbox-no-mysql.md`).
 - IDs de itens (usados nos documentos e no Tracker):
-  - PRD: `PRD-FR-NN` (funcional), `PRD-NFR-NN` (não funcional), `PRD-OOS-NN` (fora de escopo), `PRD-RISK-NN`, `PRD-MET-NN` (métrica), `PRD-AC-NN` (aceite)
+  - PRD: `PRD-CEN-NN` (cenário), `PRD-MET-NN` (métrica), `PRD-OOS-NN` (fora de escopo), `PRD-FR-NN` (funcional), `PRD-NFR-NN` (não funcional), `PRD-DEC-NN` (decisão/trade-off), `PRD-DEP-NN` (dependência), `PRD-RISK-NN`, `PRD-AC-NN` (aceite)
   - RFC: `RFC-ALT-NN` (alternativa), `RFC-OQ-NN` (questão em aberto), `RFC-RISK-NN`
   - FDD: `FDD-OBJ-NN` (objetivo técnico), `FDD-DADOS-NN` (modelo de dados), `FDD-FLUXO-NN`, `FDD-CONTRATO-NN`, `FDD-ERR-NN`, `FDD-RES-NN` (resiliência), `FDD-OBS-NN`, `FDD-INT-NN` (integração), `FDD-AC-NN`, `FDD-RISK-NN`
   - ADR: `ADR-NNN`
