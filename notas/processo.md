@@ -176,4 +176,37 @@ pode seguir com a fase 3. ao final faça o commit e marque como finalizada no pl
 
 **Autoauditoria (script):** 42 pares `[hh:mm] Nome` → 0 inválidos; caminhos citados existem (exceto `src/modules/webhooks/`, marcado "(novo, a criar)"); links relativos → 0 quebrados; 7 ADRs linkados; ~1.860 palavras incluindo marcação (dentro de 2–4 páginas).
 
-**Iteração nº:** 1 da Fase 3. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
+**Iteração nº:** 1 da Fase 3. Usuário autorizou commit direto ao final da fase.
+
+### [2026-11-27] Fase 4 — FDD
+
+**Prompts:**
+
+```
+sim me detalhe antes de seguir
+```
+
+```
+aprovo D-1 a D-6, pode seguir e fazer o commit no final
+```
+
+**Decisões de design levadas ao usuário antes de escrever (todas aprovadas):**
+- D-1: uma linha de outbox por webhook interessado, cada uma com seu `event_id` (retry/DLQ independentes por endpoint).
+- D-2: `DELETE` lógico (`deletedAt`), preservando histórico e DLQ; worker descarta pendentes.
+- D-3: schema Zod da URL aplicado no service, para emitir `WEBHOOK_INVALID_URL` em vez do `VALIDATION_ERROR` genérico do `validate.middleware`.
+- D-4: `X-Signature: sha256=<hex>`, duas assinaturas separadas por vírgula na janela de rotação; conteúdo assinado = só o corpo.
+- D-5: sem endpoint de listagem da DLQ; `deadLetterId` exposto no histórico de entregas.
+- D-6: filtro de eventos aceita só os 5 status emitíveis via `changeStatus` (sem `PENDING`).
+
+**Instrução de trabalho:** 13 seções (as 11 obrigatórias + modelo de dados + objetivos); toda escolha não fechada na reunião marcada como **(proposta)** ou **(interpretação)**; números só com origem — onde a reunião não deu número (tamanho do lote, tempo de recuperação de órfãos), o FDD diz "a definir"/"configurável" em vez de inventar; arquivos novos sempre "(novo, a criar)".
+
+**O que a IA entregou:** `docs/FDD.md` (~6.100 palavras): 7 objetivos, modelo Prisma proposto (4 models + enum, 8 decisões de modelagem), 6 fluxos (3 com diagrama de sequência Mermaid), 8 contratos (7 da API + requisição de saída ao cliente, com exemplos JSON, headers e tabelas de status), 11 códigos `WEBHOOK_*` (6 de API + 5 internos do worker), 12 estratégias de resiliência, 13 itens de observabilidade (logs, métricas e tracing como proposta sem dependência nova), 16 pontos de integração com 21 arquivos reais, 18 critérios de aceite e 8 riscos.
+
+**Problemas encontrados e correções:**
+1. **Arquivo novo sem marcação** em dois lugares (participante do diagrama Mermaid e script `worker:dev`) — detectado pelo script; corrigido.
+2. **CONTRATO-03 (PATCH) sem JSON de response** — só referenciava o formato de outro contrato; o critério pede payload de exemplo de request *e* response. JSON explícito adicionado.
+3. **Achados novos durante a escrita** (registrados como risco, sem virar requisito): `X-Timestamp` fica fora da assinatura por decorrência literal de "HMAC sobre o corpo" ([09:22] Sofia) → enfraquece a proteção contra replay (FDD-RISK-03); risco de SSRF por URL apontando para rede interna, não discutido na reunião (FDD-RISK-05); `orderId` sem FK na outbox porque `OrderService.delete` pode apagar pedidos `PENDING`/`CANCELLED` (FDD-DADOS-08); bloqueio de fila (head-of-line) pelo envio sequencial (FDD-RISK-01).
+
+**Autoauditoria (script):** 59 pares `[hh:mm] Nome` → 0 inválidos; links → 0 quebrados; 8 contratos com request e tabela de status; 0 linhas da matriz de erros sem prefixo `WEBHOOK_`; 9.1 Logs, 9.2 Métricas e 9.3 Tracing presentes; 21 caminhos reais na seção de integração; caminhos inexistentes = apenas arquivos novos marcados; termos fora de escopo só em exclusões/riscos.
+
+**Iteração nº:** 1 da Fase 4. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.

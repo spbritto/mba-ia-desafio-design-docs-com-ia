@@ -49,7 +49,7 @@ Atenção: `docs/adrs/README.md` sugere o padrão `0001-titulo.md` — **ignore*
 - IDs de itens (usados nos documentos e no Tracker):
   - PRD: `PRD-FR-NN` (funcional), `PRD-NFR-NN` (não funcional), `PRD-OOS-NN` (fora de escopo), `PRD-RISK-NN`, `PRD-MET-NN` (métrica), `PRD-AC-NN` (aceite)
   - RFC: `RFC-ALT-NN` (alternativa), `RFC-OQ-NN` (questão em aberto), `RFC-RISK-NN`
-  - FDD: `FDD-FLUXO-NN`, `FDD-CONTRATO-NN`, `FDD-ERR-NN`, `FDD-RES-NN` (resiliência), `FDD-OBS-NN`, `FDD-INT-NN` (integração), `FDD-AC-NN`
+  - FDD: `FDD-OBJ-NN` (objetivo técnico), `FDD-DADOS-NN` (modelo de dados), `FDD-FLUXO-NN`, `FDD-CONTRATO-NN`, `FDD-ERR-NN`, `FDD-RES-NN` (resiliência), `FDD-OBS-NN`, `FDD-INT-NN` (integração), `FDD-AC-NN`, `FDD-RISK-NN`
   - ADR: `ADR-NNN`
 - Tracker: tabela `| ID | Documento | Tipo | Conteúdo (resumo) | Fonte | Localização |`, Fonte = `TRANSCRICAO` ou `CODIGO`. Metas: ≥ 80% de cobertura, ≥ 70% das linhas `TRANSCRICAO`, ≥ 5 linhas `CODIGO`.
 
