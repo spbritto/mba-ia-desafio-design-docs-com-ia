@@ -296,6 +296,14 @@ pode seguir com as duas fases finais para finalizar o plano e entendao revisar p
 1. **Falso positivo no próprio script:** a checagem "≥ 1 ADR referencia código" usava crases dentro de `eval`, o shell tentou executá-las e o teste deu OK sem verificar nada. Percebido pela mensagem de erro no meio da saída; checagem refeita manualmente (7/7 ADRs citam arquivos reais) e corrigida na versão do script guardada em `notas/scripts/`.
 2. **README citava caminhos inexistentes ao descrever um erro:** a iteração 1 da tabela mencionava literalmente os arquivos do worker que ainda não existem; o script só não acusou porque a linha continha o texto "(novo, a criar)" entre aspas. Reescrita sem os caminhos.
 
-**Resultado:** 0 falhas; todos os critérios do enunciado atendidos (detalhe em `notas/revisao-final.md`). Push e PR aguardando autorização do usuário.
+**Resultado:** 0 falhas; todos os critérios do enunciado atendidos (detalhe em `notas/revisao-final.md`).
 
-**Iteração nº:** 1 da Fase 8. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
+**Iteração nº:** 1 da Fase 8.
+
+**Fechamento:**
+
+```
+ao final faça o commit final para e o push
+```
+
+Commit final com o status do plano e push da branch `docs/design-docs-webhooks` para o fork. O PR para a `main` fica como próximo passo. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.

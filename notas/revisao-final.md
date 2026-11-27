@@ -80,5 +80,5 @@ Verificação item a item contra a seção "Critérios de Aceite" de [`notas/enu
 
 ## Pendências fora do escopo desta entrega
 
-- Push da branch `docs/design-docs-webhooks` e abertura do PR para a `main` — aguardando autorização.
+- Abertura do PR da branch `docs/design-docs-webhooks` (já enviada ao fork) para a `main`.
 - Itens do anexo do tracker (4 propostas sem origem direta) e as questões em aberto do RFC são, por natureza, pontos para a sessão de revisão do design ([09:50] Larissa) e para a revisão de segurança ([09:46] Sofia).
