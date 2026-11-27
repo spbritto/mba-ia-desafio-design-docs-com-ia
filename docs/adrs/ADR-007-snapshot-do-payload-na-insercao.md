@@ -22,7 +22,7 @@ O conteúdo do payload (campos como `order_id`, `order_number`, `from_status`, `
 
 ## Alternativas Consideradas
 
-### A. Guardar só o `order_id` e renderizar no envio
+### A. Guardar só o `order_id` e renderizar no envio — `ADR-007-ALT-A`
 Gravar uma referência e montar o payload quando o worker for enviar ([09:51] Bruno). **Descartada:** se o pedido mudar depois, o evento deixaria de refletir o estado do momento da mudança — "senão tem caso esquisito" ([09:52] Larissa). Exemplo: um evento `PAID → PROCESSING` reenviado horas depois, já com o pedido `SHIPPED`, carregaria dados incoerentes com a transição anunciada.
 
 ## Consequências

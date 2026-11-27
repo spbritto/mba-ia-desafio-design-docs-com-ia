@@ -42,10 +42,10 @@ A pergunta é se a feature segue esses padrões ou introduz estruturas próprias
 
 ## Alternativas Consideradas
 
-### A. Injetar um repository de webhook no `OrderService`
+### A. Injetar um repository de webhook no `OrderService` — `ADR-006-ALT-A`
 Discutida na reunião. **Preterida:** "função pura recebendo o tx. Não precisa injetar repository inteiro" ([09:41] Diego). Mantém o construtor de `OrderService` (`src/modules/orders/order.service.ts`) e a composição em `src/app.ts` inalterados.
 
-### B. Estrutura e bibliotecas próprias para o módulo (alternativa plausível)
+### B. Estrutura e bibliotecas próprias para o módulo (alternativa plausível) — `ADR-006-ALT-B`
 Por exemplo, um framework de jobs, outro logger ou um tratamento de erro local com middleware próprio. **Rejeitada:** contraria a decisão de reuso ([09:30] Larissa) e o "nada novo" do logger ([09:29] Bruno); produziria envelopes de erro e logs inconsistentes com o resto da API e aumentaria a superfície de revisão de segurança ([09:46] Sofia).
 
 ## Consequências

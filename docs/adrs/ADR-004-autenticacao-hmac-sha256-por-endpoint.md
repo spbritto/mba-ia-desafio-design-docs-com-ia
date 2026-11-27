@@ -31,10 +31,10 @@ Complementam esta decisão, como requisitos e não como decisões arquiteturais:
 
 ## Alternativas Consideradas
 
-### A. Secret global da plataforma
+### A. Secret global da plataforma — `ADR-004-ALT-A`
 Uma única secret para assinar os envios de todos os clientes. **Descartada:** "se vaza uma, vaza tudo" ([09:21] Sofia) — o vazamento em um cliente comprometeria a autenticidade das entregas de todos.
 
-### B. Apenas TLS, sem assinatura (alternativa plausível, não discutida)
+### B. Apenas TLS, sem assinatura (alternativa plausível, não discutida) — `ADR-004-ALT-B`
 Confiar só no `https`. **Não atende:** TLS protege o transporte e autentica o servidor do cliente para a plataforma, mas não prova ao cliente que a requisição partiu da plataforma — que é a exigência de [09:19] Sofia. Por isso o `https` é obrigatório ([09:23] Sofia), mas como complemento ao HMAC.
 
 ## Consequências

@@ -49,17 +49,17 @@ flowchart LR
     DLQ -->|volta como pendente| OB
 ```
 
-**3.1 Captura do evento.** Dentro da transação do `changeStatus`, depois do registro no histórico, uma função `publishWebhookEvent(tx, order, fromStatus, toStatus)` grava o evento na outbox ([09:41] Bruno). O payload é gravado já renderizado, como snapshot do momento da transição ([ADR-007](./adrs/ADR-007-snapshot-do-payload-na-insercao.md)). Só se grava evento se algum webhook ativo do cliente quer aquele status ([09:34] Bruno). Falha na gravação desfaz a mudança de status ([09:40] Bruno).
+**3.1 Captura do evento (`RFC-PROP-01`).** Dentro da transação do `changeStatus`, depois do registro no histórico, uma função `publishWebhookEvent(tx, order, fromStatus, toStatus)` grava o evento na outbox ([09:41] Bruno). O payload é gravado já renderizado, como snapshot do momento da transição ([ADR-007](./adrs/ADR-007-snapshot-do-payload-na-insercao.md)). Só se grava evento se algum webhook ativo do cliente quer aquele status ([09:34] Bruno). Falha na gravação desfaz a mudança de status ([09:40] Bruno).
 
-**3.2 Entrega.** Um worker em processo próprio, com entry-point nova e instância própria do Prisma, busca a cada 2 s os eventos pendentes mais antigos em lotes pequenos e faz o POST para o endpoint do cliente ([09:09] Diego, [09:11] Larissa, [09:30] Bruno). Nesta fase roda **um único worker** ([09:12] Diego).
+**3.2 Entrega (`RFC-PROP-02`).** Um worker em processo próprio, com entry-point nova e instância própria do Prisma, busca a cada 2 s os eventos pendentes mais antigos em lotes pequenos e faz o POST para o endpoint do cliente ([09:09] Diego, [09:11] Larissa, [09:30] Bruno). Nesta fase roda **um único worker** ([09:12] Diego).
 
-**3.3 Falhas.** Sem resposta de sucesso (incluindo timeout de 10 s, [09:42] Diego), o evento é reagendado com backoff de 1m/5m/30m/2h/12h ([09:17] Larissa); esgotadas as tentativas, vai para uma DLQ em tabela própria, de onde um administrador pode reprocessá-lo manualmente ([09:18] Diego, [09:36] Sofia).
+**3.3 Falhas (`RFC-PROP-03`).** Sem resposta de sucesso (incluindo timeout de 10 s, [09:42] Diego), o evento é reagendado com backoff de 1m/5m/30m/2h/12h ([09:17] Larissa); esgotadas as tentativas, vai para uma DLQ em tabela própria, de onde um administrador pode reprocessá-lo manualmente ([09:18] Diego, [09:36] Sofia).
 
-**3.4 Segurança.** Cada endpoint tem sua própria secret, gerada pela plataforma e rotacionável com 24 h de convivência entre a antiga e a nova; o corpo de cada envio é assinado com HMAC-SHA256 ([09:22] Sofia). URLs precisam ser `https` ([09:23] Sofia).
+**3.4 Segurança (`RFC-PROP-04`).** Cada endpoint tem sua própria secret, gerada pela plataforma e rotacionável com 24 h de convivência entre a antiga e a nova; o corpo de cada envio é assinado com HMAC-SHA256 ([09:22] Sofia). URLs precisam ser `https` ([09:23] Sofia).
 
-**3.5 Semântica de entrega.** At-least-once: duplicatas são possíveis e o cliente deduplica pelo `X-Event-Id` ([09:26] Larissa). A ordem só é garantida por pedido e enquanto houver um único worker ([09:13] Larissa).
+**3.5 Semântica de entrega (`RFC-PROP-05`).** At-least-once: duplicatas são possíveis e o cliente deduplica pelo `X-Event-Id` ([09:26] Larissa). A ordem só é garantida por pedido e enquanto houver um único worker ([09:13] Larissa).
 
-**3.6 Superfície e código.** Um novo módulo `src/modules/webhooks/` **(novo, a criar)**, no padrão dos módulos existentes, expõe o cadastro e a manutenção de webhooks, a rotação de secret, o histórico de entregas e o replay administrativo; erros seguem `AppError` com prefixo `WEBHOOK_` ([09:30] Larissa). Contratos, payload, headers, modelo de dados e matriz de erros estão no [FDD](./FDD.md).
+**3.6 Superfície e código (`RFC-PROP-06`).** Um novo módulo `src/modules/webhooks/` **(novo, a criar)**, no padrão dos módulos existentes, expõe o cadastro e a manutenção de webhooks, a rotação de secret, o histórico de entregas e o replay administrativo; erros seguem `AppError` com prefixo `WEBHOOK_` ([09:30] Larissa). Contratos, payload, headers, modelo de dados e matriz de erros estão no [FDD](./FDD.md).
 
 ## 4. Alternativas consideradas
 

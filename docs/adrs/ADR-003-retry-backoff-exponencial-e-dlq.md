@@ -38,13 +38,13 @@ O endpoint do cliente pode estar fora do ar, lento ou com erro no momento do env
 
 ## Alternativas Consideradas
 
-### A. Retry indefinido com backoff
+### A. Retry indefinido com backoff — `ADR-003-ALT-A`
 "Algumas pessoas defendem retry indefinido". **Descartada:** sem teto, o evento fica pendurado para sempre se o cliente sumiu ([09:15] Diego).
 
-### B. 3 tentativas ("mais agressivo")
+### B. 3 tentativas ("mais agressivo") — `ADR-003-ALT-B`
 Proposta de Bruno ([09:16] Bruno). **Descartada:** "3 é pouco" — uma indisponibilidade pela manhã esgotaria as três tentativas em ~30 minutos, e já houve cliente com duas horas de manutenção planejada ([09:16] Diego).
 
-### C. Marcar o evento como "failed" na própria outbox (sem tabela de DLQ)
+### C. Marcar o evento como "failed" na própria outbox (sem tabela de DLQ) — `ADR-003-ALT-C`
 Opção levantada por Larissa ([09:17] Larissa). **Preterida:** a tabela separada deixa "mais limpa a leitura da outbox principal" e serve como evidência para debug e reprocessamento ([09:18] Diego).
 
 ## Consequências

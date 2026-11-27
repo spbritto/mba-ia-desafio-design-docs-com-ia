@@ -10,7 +10,7 @@ Legenda de status: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | 3 | `docs/RFC.md` | ✅ |
 | 4 | `docs/FDD.md` | ✅ |
 | 5 | `docs/PRD.md` | ✅ |
-| 6 | `docs/TRACKER.md` | ⬜ |
+| 6 | `docs/TRACKER.md` | ✅ |
 | 7 | `README.md` do processo | ⬜ |
 | 8 | Revisão final contra a checklist + push | ⬜ |
 

@@ -28,13 +28,13 @@ Registrado como decisão: "Worker em polling, 2s. A latência mínima vai ser 2 
 
 ## Alternativas Consideradas
 
-### A. Trigger no banco para reagir à inserção
+### A. Trigger no banco para reagir à inserção — `ADR-002-ALT-A`
 Proposta para ser "mais reativo" ([09:09] Bruno). **Descartada:** trigger no MySQL não notifica processo externo; para acordar o worker "a gente teria que improvisar algo tipo escrever em arquivo ou bater num endpoint, fica esquisito" ([09:09] Diego). O polling de 2 s já atende o requisito ([09:09] Diego).
 
-### B. Worker dentro do processo da API
+### B. Worker dentro do processo da API — `ADR-002-ALT-B`
 Rodar o loop de entrega na mesma instância Node que serve HTTP. **Descartada:** reinícios e deploys da API derrubariam o worker ([09:11] Diego); além disso, a carga de entrega competiria com o atendimento de requisições.
 
-### C. Múltiplos workers em paralelo
+### C. Múltiplos workers em paralelo — `ADR-002-ALT-C`
 Escalar horizontalmente desde o início. **Adiada:** com vários workers "perde a garantia" de ordem; soluções como particionar por `order_id` ou lock pessimista são "problema do futuro, não agora" ([09:12]–[09:13] Diego). Fica como questão em aberto no RFC.
 
 ## Consequências

@@ -27,10 +27,10 @@ A combinação outbox + worker + retry ([ADR-001](./ADR-001-outbox-no-mysql.md),
 
 ## Alternativas Consideradas
 
-### A. Exactly-once
+### A. Exactly-once — `ADR-005-ALT-A`
 Garantir que cada evento seja processado exatamente uma vez. **Descartada:** "exigiria coordenação dos dois lados e fica muito mais complexo"; at-least-once com `event_id` é o padrão de mercado ("Stripe faz assim, GitHub faz assim") ([09:25] Diego).
 
-### B. At-most-once (sem retentativas) — alternativa plausível, não discutida
+### B. At-most-once (sem retentativas) — alternativa plausível, não discutida — `ADR-005-ALT-B`
 Enviar uma única vez e aceitar perdas. **Incompatível** com a decisão de retry com backoff e DLQ ([ADR-003](./ADR-003-retry-backoff-exponencial-e-dlq.md)): clientes com indisponibilidade temporária perderiam eventos ([09:16] Diego).
 
 ## Consequências

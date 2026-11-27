@@ -240,4 +240,34 @@ aprovo P-1 a P-4, pode seguir e fazer o commit no final
 
 **Autoauditoria (script):** 12 seções; 58 pares `[hh:mm] Nome` → 0 inválidos; links → 0 quebrados; 7/7 riscos com probabilidade e impacto; 0 ocorrências de conteúdo de nível FDD; termos fora de escopo só na seção 5.2 e em riscos.
 
-**Iteração nº:** 1 da Fase 5. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
+**Iteração nº:** 1 da Fase 5. Usuário autorizou commit direto ao final da fase.
+
+### [2026-11-27] Fase 6 — Tracker de rastreabilidade
+
+**Prompts:**
+
+```
+sim me detalhe a fase 6 antes de seguir
+```
+
+```
+aprovo T-1 a T-4, pode seguir e fazer o commit no final
+```
+
+**Regras levadas ao usuário antes de escrever (todas aprovadas):**
+- T-1: múltiplas falas → a principal primeiro (quem propõe/fecha), demais separadas por `;`. Item com origem na transcrição e no código → fonte = a que define o conteúdo (`FDD-INT` = CODIGO; decisões e requisitos = TRANSCRICAO).
+- T-2: proposta/interpretação com âncora entra na tabela apontando a fala/arquivo de onde deriva; **sem âncora nenhuma vai para um anexo** com justificativa, fora da cobertura — em vez de forçar uma localização falsa.
+- T-3: cada alternativa de ADR ganha ID próprio (`ADR-NNN-ALT-X`) e linha no tracker.
+- T-4: os 6 pilares da proposta do RFC ganham IDs `RFC-PROP-01..06`.
+
+**O que a IA entregou:**
+- Edições pequenas nos documentos para criar os IDs de T-3 (16 alternativas nos 7 ADRs, via `sed` nos títulos `### X.`) e T-4 (6 parágrafos do RFC §3).
+- `docs/TRACKER.md` com: guia de leitura, resumo de cobertura calculado por script, tabela única no formato obrigatório (228 linhas), anexo com 4 itens sem origem direta e seção "Como foi verificado".
+
+**Script de verificação (5 checagens):** (1) completude — todo ID que aparece em PRD/RFC/FDD/ADRs está na tabela ou no anexo, e vice-versa; (2) cada ID aparece de fato no arquivo da coluna Documento; (3) todo `[hh:mm] Nome` existe na transcrição com aquele falante; (4) todo caminho `CODIGO` existe; (5) percentuais. **Resultado na primeira execução: zero inconsistências.**
+
+**Resultado:** 232 IDs nos documentos; cobertura 98,3% (228/232); 204 linhas `TRANSCRICAO` (89,5%); 24 linhas `CODIGO` — todas acima das metas (80% / 70% / 5).
+
+**Ponto de atenção / ajuste de processo:** a exigência do tracker expôs 4 itens do FDD sem nenhuma origem (`FDD-ERR-06`, `FDD-RES-03`, `FDD-RES-10`, `FDD-AC-12`). Em vez de remover — são escolhas de implementação úteis e já sinalizadas como proposta — ficaram no anexo com justificativa e a recomendação de validá-los na sessão de revisão com Bruno e Diego ([09:50] Larissa). Isso segue a dica do enunciado: item sem localização é sinal de possível invenção e precisa ser tratado explicitamente.
+
+**Iteração nº:** 1 da Fase 6. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.

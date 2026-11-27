@@ -33,13 +33,13 @@ Commit da transação ⇒ evento registrado; rollback ⇒ evento descartado junt
 
 ## Alternativas Consideradas
 
-### A. Disparo HTTP síncrono dentro do `changeStatus`
+### A. Disparo HTTP síncrono dentro do `changeStatus` — `ADR-001-ALT-A`
 Chamar o endpoint do cliente durante a mudança de status. **Descartada:** um cliente lento "vai travar mudança de status pra outros pedidos" ([09:04] Bruno), e cliente fora do ar forçaria escolher entre rollback do status ou perda do evento ([09:04] Bruno). "Síncrono está fora de questão" ([09:06] Diego).
 
-### B. Redis Streams (ou fila/broker equivalente)
+### B. Redis Streams (ou fila/broker equivalente) — `ADR-001-ALT-B`
 Publicar o evento em uma fila externa consumida por um worker. **Descartada:** "a gente acabaria precisando subir mais infra" ([09:07] Larissa); para um time pequeno, "subir Redis Cluster pra isso é overengineering" ([09:07] Diego). Além disso, publicar em um sistema externo não participa da transação MySQL — o problema de consistência voltaria.
 
-### C. Inserir o evento fora da transação (após o commit)
+### C. Inserir o evento fora da transação (após o commit) — `ADR-001-ALT-C`
 Gravar o evento em um passo separado depois da mudança de status. **Descartada:** uma falha entre o commit e a inserção perderia o evento — "se ficar fora da transação, perde a garantia toda" ([09:41] Diego).
 
 ## Consequências
