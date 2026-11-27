@@ -150,4 +150,30 @@ ok pode seguir
 ok, fiz a revisão do texto das ADRs e estou de acordo. Pode seguir com o commit e fechamos a fase 2.
 ```
 
-ADRs aprovados sem alterações. Pendência levada para a Fase 3: incluir no RFC, como questão em aberto, a interação entre retentativas e a ordem por pedido (observação do ADR-003). Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
+ADRs aprovados sem alterações. Pendência levada para a Fase 3: incluir no RFC, como questão em aberto, a interação entre retentativas e a ordem por pedido (observação do ADR-003).
+
+### [2026-11-27] Fase 3 — RFC
+
+**Prompts:**
+
+```
+vamos dar sequencia na proxima fase. faça a anlise do que ja foi feito e me confirme a proxima fase antes de começar
+```
+
+```
+pode seguir com a fase 3. ao final faça o commit e marque como finalizada no plano
+```
+
+(Aprovados junto: autora Larissa — por [09:50] "vou abrir o doc de design" —, status "Em revisão", data 2026-11-27, revisores = demais participantes com o papel de cada um na revisão.)
+
+**Instrução de trabalho:** RFC de 2–4 páginas em nível de arquitetura; proposta resumida por pilar com link para o ADR correspondente (sem repetir o ADR); só alternativas arquiteturais (variações de parâmetro ficam nos ADRs); questões em aberto separadas entre "levantadas na reunião" e "identificadas na análise"; itens adiados num bloco próprio para não serem confundidos com questões em aberto; nada de payload, headers detalhados, matriz de erros ou schema.
+
+**O que a IA entregou:** `docs/RFC.md` com 9 seções (Metadados, TL;DR, Contexto, Proposta com diagrama Mermaid, Alternativas, Questões em aberto, Impacto e riscos, Decisões relacionadas, Próximos passos); 6 alternativas (`RFC-ALT-01..06`), 6 questões em aberto (`RFC-OQ-01..06` — 3 da reunião + 3 da análise, incluindo a pendência da Fase 2), 3 itens adiados, 8 riscos (`RFC-RISK-01..08`), links para os 7 ADRs.
+
+**Problemas encontrados e correções:**
+1. **Metadados sem título de seção.** A tabela de metadados estava logo abaixo do título, sem `## Metadados`; o enunciado lista "Metadados" como seção obrigatória. Título adicionado.
+2. **Controle de altura:** o diagrama da proposta foi mantido em nível de componentes (sem nomes de tabela propostos, endpoints só o já existente `PATCH /api/v1/orders/:id/status`); nomes de tabelas, contratos e erros foram deixados explicitamente para o FDD. O script de verificação de "conteúdo de FDD" (códigos `WEBHOOK_*`, JSON, headers secundários, schema Prisma) não encontrou ocorrências.
+
+**Autoauditoria (script):** 42 pares `[hh:mm] Nome` → 0 inválidos; caminhos citados existem (exceto `src/modules/webhooks/`, marcado "(novo, a criar)"); links relativos → 0 quebrados; 7 ADRs linkados; ~1.860 palavras incluindo marcação (dentro de 2–4 páginas).
+
+**Iteração nº:** 1 da Fase 3. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
