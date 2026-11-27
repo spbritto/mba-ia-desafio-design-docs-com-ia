@@ -270,4 +270,18 @@ aprovo T-1 a T-4, pode seguir e fazer o commit no final
 
 **Ponto de atenção / ajuste de processo:** a exigência do tracker expôs 4 itens do FDD sem nenhuma origem (`FDD-ERR-06`, `FDD-RES-03`, `FDD-RES-10`, `FDD-AC-12`). Em vez de remover — são escolhas de implementação úteis e já sinalizadas como proposta — ficaram no anexo com justificativa e a recomendação de validá-los na sessão de revisão com Bruno e Diego ([09:50] Larissa). Isso segue a dica do enunciado: item sem localização é sinal de possível invenção e precisa ser tratado explicitamente.
 
-**Iteração nº:** 1 da Fase 6. Usuário autorizou commit direto ao final da fase. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.
+**Iteração nº:** 1 da Fase 6. Usuário autorizou commit direto ao final da fase.
+
+### [2026-11-27] Fase 7 — README do processo
+
+**Prompt:**
+
+```
+pode seguir com as duas fases finais para finalizar o plano e entendao revisar para entregar o desafio
+```
+
+**O que a IA entregou:** cópia do enunciado original em `notas/enunciado-original.md` (via `git show main:README.md`, para não perder a checklist de aceite usada na Fase 8) e novo `README.md` com as 6 seções obrigatórias: Sobre o desafio, Ferramentas de IA, Workflow (princípios, tabela de fases com commits, diagrama do ciclo por fase, organização da interação), 5 prompts em blocos de código, 10 iterações concretas em tabela e guia de navegação com ordem de leitura. `CLAUDE.md` atualizado para apontar para a cópia do enunciado.
+
+**Cuidado aplicado:** os prompts mostrados são os reais deste diário (literais quando digitados pelo usuário; o trecho do `CLAUDE.md` e a instrução de extração aparecem como prompts redigidos com a IA e aprovados), sem reescrever a história.
+
+**Iteração nº:** 1 da Fase 7. Destaques: L-01 → 1 envio inicial + 5 retentativas; L-02 → limite de 64 KB validado no worker, evento vai direto à DLQ; L-03 → assinatura dupla durante o grace period como proposta + questão em aberto; L-10 → ausência de vínculo User↔Customer vira risco/questão em aberto, sem inventar o vínculo.

@@ -2,7 +2,7 @@
 
 Este repositório é uma **entrega puramente documental**. A partir de `TRANSCRICAO.md` (reunião técnica) e do código existente (OMS em Node.js + TypeScript + Prisma/MySQL), produzimos o pacote de design docs da feature **Sistema de Webhooks de Notificação de Pedidos**.
 
-- Enunciado completo: `README.md` (até a Fase 7, quando ele será substituído — o enunciado original fica referenciado lá)
+- Enunciado completo: `notas/enunciado-original.md` (cópia do README original; o `README.md` foi substituído na Fase 7 pela documentação do processo)
 - Plano de execução e status das fases: `notas/plano.md`
 - Diário do processo (prompts, erros da IA, correções): `notas/processo.md`
 
