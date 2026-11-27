@@ -38,8 +38,8 @@ A dificuldade real não era escrever, e sim **filtrar**: a reunião mistura deci
 | 4 | FDD | `5f0424c` |
 | 5 | PRD | `972a436` |
 | 6 | Tracker (228 linhas) | `f99b257` |
-| 7 | Este README | — |
-| 8 | Revisão final contra a checklist de aceite | — |
+| 7 | Este README | `8dc3fa3` |
+| 8 | Revisão final contra a checklist de aceite ([`notas/revisao-final.md`](notas/revisao-final.md)) | último commit da branch |
 
 A ordem seguiu a sugestão do enunciado — **ADRs primeiro** (as decisões são o esqueleto), depois RFC (consolida e aponta alternativas e questões em aberto), FDD (detalha sobre decisões já fechadas), PRD (consolidação em linguagem de produto) e, por último, Tracker e README.
 
@@ -145,7 +145,7 @@ O trabalho teve **9 fases, cada uma com um ciclo principal** (escopo → aprova�
 
 | # | Fase | O que a IA fez de errado ou superficial | Como foi corrigido |
 |---|---|---|---|
-| 1 | 1 | Citou `src/worker.ts` e `webhook.worker.ts` sem a marca "(novo, a criar)" — violaria o critério "nenhum arquivo inexistente citado" | O script de caminhos detectou; marcação adicionada e regra reforçada no `CLAUDE.md` |
+| 1 | 1 | Citou os arquivos de entry-point e de processamento do worker — que a feature ainda vai criar — sem a marca "(novo, a criar)", o que violaria o critério "nenhum arquivo inexistente citado" | O script de caminhos detectou; marcação adicionada e regra reforçada no `CLAUDE.md` |
 | 2 | 1 | A leitura direta de "5 tentativas, backoff 1m/5m/30m/2h/12h" ([09:17]) daria 5 envios — mas 5 intervalos somam 14 h 36 min, o "quase 15 horas" de Diego, o que só fecha com **1 envio + 5 retentativas** | Registrado como lacuna L-01, decidido no gate e escrito no ADR-003 como interpretação explícita, com tabela de tempos |
 | 3 | 1 | O limite de 64 KB ("erra", [09:23]) aplicado na gravação da outbox desfaria a mudança de status do pedido por causa do webhook — contradiz [09:40] Bruno | Lacuna L-02: validação movida para o worker (DLQ direto) e levada ao RFC como questão em aberto |
 | 4 | 2 | Status dos ADRs escrito como linha de metadado; o critério pede a **seção** Status | Convertido em `## Status` nos 7 ADRs antes do commit |
@@ -179,7 +179,9 @@ Outros ajustes de processo registrados no diário: troca do terminal pela extens
     ├── matriz-transcricao.md  ← extração classificada da reunião
     ├── mapa-codigo.md         ← pontos de integração com o código
     ├── revisao-final.md       ← checklist de aceite verificada
-    └── enunciado-original.md  ← cópia do enunciado
+    ├── enunciado-original.md  ← cópia do enunciado
+    └── scripts/
+        └── auditoria-final.sh ← verificação automática dos critérios de aceite
 ```
 
 **Ordem sugerida de leitura:**

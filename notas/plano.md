@@ -12,7 +12,7 @@ Legenda de status: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | 5 | `docs/PRD.md` | ✅ |
 | 6 | `docs/TRACKER.md` | ✅ |
 | 7 | `README.md` do processo | ✅ |
-| 8 | Revisão final contra a checklist + push | ⬜ |
+| 8 | Revisão final contra a checklist + push | ✅ revisão (`notas/revisao-final.md`) · ⬜ push e PR aguardando autorização |
 
 ## Princípios
 
